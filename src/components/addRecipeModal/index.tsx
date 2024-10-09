@@ -4,7 +4,7 @@ import { GlobalComponents } from '..';
 import { useState } from 'react';
 import { Recipe } from '../../types';
 
-const AddRecipeModal = ({ openModal, isModalOpen, setRecipes, recipes }: { setRecipes: any, recipes: Recipe[], openModal: () => void, isModalOpen: boolean }) => {
+const AddRecipeModal = ({ openModal, selectedRecipe, isModalOpen, setRecipes, recipes,setSelectedRecipe }: {setSelectedRecipe:any, selectedRecipe: Recipe[], setRecipes: any, recipes: Recipe[], openModal: () => void, isModalOpen: boolean }) => {
 
   const weeks = [
     { id: 0, text: "Week 1" },
@@ -16,50 +16,19 @@ const AddRecipeModal = ({ openModal, isModalOpen, setRecipes, recipes }: { setRe
   const [selectedWeek, setSelectedWeek] = useState({ id: 0, text: "Week 1" })
 
   const addRecipe = (week: string) => {
-    const data = {
-      week,
-      "id": Math.random().toString(36).substr(2, 16),
-      "name": "Classic Margherita Pizza",
-      "ingredients": [
-        "Pizza dough",
-        "Tomato sauce",
-        "Fresh mozzarella cheese",
-        "Fresh basil leaves",
-        "Olive oil",
-        "Salt and pepper to taste"
-      ],
-      "instructions": [
-        "Preheat the oven to 475°F (245°C).",
-        "Roll out the pizza dough and spread tomato sauce evenly.",
-        "Top with slices of fresh mozzarella and fresh basil leaves.",
-        "Drizzle with olive oil and season with salt and pepper.",
-        "Bake in the preheated oven for 12-15 minutes or until the crust is golden brown.",
-        "Slice and serve hot."
-      ],
-      "prepTimeMinutes": 20,
-      "cookTimeMinutes": 15,
-      "servings": 4,
-      "difficulty": "Easy",
-      "cuisine": "Italian",
-      "caloriesPerServing": 300,
-      "tags": [
-        "Pizza",
-        "Italian"
-      ],
-      "userId": 166,
-      "image": "https://cdn.dummyjson.com/recipe-images/1.webp",
-      "rating": 4.6,
-      "reviewCount": 98,
-      "mealType": [
-        "Dinner"
-      ]
-    }
-    const recipe = { ...data, week }
-    const findWeek = recipes?.find((recipe) => recipe?.week === week)
-    if (findWeek) return alert("Recipe already added to this week")
-    setRecipes([...recipes, recipe])
-    openModal()
-  }
+    
+    const findWeek = recipes?.find((recipe) => recipe.week === week);
+    if (findWeek) return alert("Recipe already added to this week");
+
+    const updatedRecipes = selectedRecipe.map((recipe) => ({
+      ...recipe,
+      week, 
+    }));
+
+    setRecipes([...recipes, ...updatedRecipes]);
+    setSelectedRecipe([])
+    openModal();
+  };
 
   return (
     <div>

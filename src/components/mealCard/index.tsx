@@ -1,28 +1,19 @@
-import { useState } from 'react';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { StarRating } from './star';
 import { Recipe } from '../../types';
 
 
-const MealCard = ({ setRecipes, recipes, data, showIcon }: { setRecipes: any, recipes: Recipe[], showIcon: boolean, data: Recipe }) => {
-    const [selectRecipe, setSelectRecipe] = useState<null | number>(null)
-
-    const handleSelectRecipe = (id: number) => {
-        if (selectRecipe === id) {
-            setSelectRecipe(null)
-        } else {
-            setSelectRecipe(id)
-        }
-    }
+const MealCard = ({selectRecipe, setRecipes, recipes, data, showIcon,handleSelectRecipe }: {selectRecipe:Recipe[], handleSelectRecipe:any,setRecipes: any, recipes: Recipe[], showIcon: boolean, data: Recipe }) => {
 
     const deleteRecipe = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
         e.stopPropagation()
         setRecipes(recipes.filter((recipe) => recipe.id !== id))
-
     }
 
+    let isExist = selectRecipe?.find(i => i.id == data?.id)
+
     return (
-        <div onClick={() => handleSelectRecipe(data.id)} className={`relative flex flex-col justify-between gap-5 p-5 my-6 bg-white shadow-md border border-slate-200 rounded-xl lg:w-[90%] ${selectRecipe === data.id && "border-2 border-[rgb(23,37,84)]"} `}>
+        <div onClick={() => handleSelectRecipe(data)} className={`relative flex flex-col justify-between gap-5 p-5 my-6 bg-white shadow-md border border-slate-200 rounded-xl lg:w-[90%] ${isExist && "border-2 border-[rgb(23,37,84)]"} `}>
             {/*  */}
             <div className="relative h-56 my-5 flex items-center justify-center overflow-hidden text-white rounded-md">
                 <img className="object-cover w-[100%] rounded-2xl" src={data?.image} alt="card-image" />

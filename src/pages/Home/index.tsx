@@ -14,11 +14,10 @@ const Home = () => {
     const [loader, setLoader] = useState(false)
     const [originalRecipes, setOriginalRecipes] = useState([]);
     const [recipes, setRecipes] = useState(originalRecipes);
-
     const [open, setOpen] = useState(false);
 
     const onOpenModal = () => setOpen(!open);
-    
+
     useEffect(() => {
         get_recipes()
     }, [])
@@ -43,13 +42,27 @@ const Home = () => {
             setOriginalRecipes(data?.recipes)
         } catch (error) {
             console.log(error, 'error')
+            alert("Something went wrong")
         } finally {
             setLoader(false)
         }
     }
 
+    const [selectRecipe, setSelectRecipe] = useState<Recipe[]>([])
+
+    const handleSelectRecipe = (data: Recipe) => {
+        setSelectRecipe((prevSelectRecipe) => {
+            const isRecipeSelected = prevSelectRecipe.some((recipe) => recipe.id === data.id);
+            if (isRecipeSelected) {
+                return prevSelectRecipe.filter((recipe) => recipe.id !== data.id);
+            } else {
+                return [...prevSelectRecipe, data];
+            }
+        });
+    }
+
     return (
-        <div className="bg-gradient-to-r from-[#d9a7c7] to-[#fffcdc]  w-full" >
+        <div className="bg-gradient-to-r from-[#d9a7c7] to-[#fffcdc]  w-full min-h-[100vh]" >
             <div className="flex layout py-5 px-5 xl:px-0">
                 <h1 className="text-4xl font-bold ">Week Orders</h1>
             </div>
@@ -70,11 +83,11 @@ const Home = () => {
             {/* meals */}
             <div className="px-5 xl:px-0 layout grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {loader ? <>Loading...</> : !recipes.length ? <>No Recipe For This Week Added</> : recipes?.map((meal, index) => (
-                    <GlobalComponents.MealCard showIcon={selectedWeek.id != 0} setRecipes={setRecipes} recipes={recipes} key={index} data={meal} />
+                    <GlobalComponents.MealCard handleSelectRecipe={handleSelectRecipe} selectRecipe={selectRecipe} showIcon={selectedWeek.id != 0} setRecipes={setRecipes} recipes={recipes} key={index} data={meal} />
                 ))}
             </div>
 
-            <GlobalComponents.AddRecipeModal setRecipes={setOriginalRecipes} recipes={originalRecipes} openModal={onOpenModal} isModalOpen={open} />
+            <GlobalComponents.AddRecipeModal selectedRecipe={selectRecipe} setSelectedRecipe={setSelectRecipe} setRecipes={setOriginalRecipes} recipes={originalRecipes} openModal={onOpenModal} isModalOpen={open} />
         </div>
     )
 }
