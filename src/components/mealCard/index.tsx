@@ -1,25 +1,8 @@
 import { useState } from 'react';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { StarRating } from './star';
+import { Recipe } from '../../types';
 
-type Recipe = {
-    id: number;
-    name: string;
-    ingredients: string[];
-    instructions: string[];
-    prepTimeMinutes: number;
-    cookTimeMinutes: number;
-    servings: number;
-    difficulty: 'Easy' | 'Medium' | 'Hard'; // Since difficulty has specific values, it's better to define it like this
-    cuisine: string;
-    caloriesPerServing: number;
-    tags: string[];
-    userId: number;
-    image: string;
-    rating: number;
-    reviewCount: number;
-    mealType: string[];
-};
 
 const MealCard = ({ setRecipes, recipes, data, showIcon }: { setRecipes: any, recipes: Recipe[], showIcon: boolean, data: Recipe }) => {
     const [selectRecipe, setSelectRecipe] = useState<null | number>(null)
