@@ -76,7 +76,13 @@ const Home = () => {
                         <p onClick={() => setSelectedWeek(week)} className={`pb-2 md:w-[80%]  cursor-pointer   ${selectedWeek.id === week.id ? "selected-week " : "unselected-week"} `} key={week.id} >{week.text}</p>
                     ))}
 
-                    <GlobalComponents.Button title={"Add To Week"} onClick={onOpenModal} disabled={selectedWeek.id != 0} />
+                    <GlobalComponents.Button title={"Add To Week"} onClick={() => {
+                        if (selectRecipe.length) {
+                            onOpenModal()
+                        }else{
+                            alert("Please select recipe to add")
+                        }
+                    }} disabled={selectedWeek.id != 0} />
                 </div>
             </div>
 

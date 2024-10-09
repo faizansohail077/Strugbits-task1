@@ -13,7 +13,7 @@ const MealCard = ({selectRecipe, setRecipes, recipes, data, showIcon,handleSelec
     let isExist = selectRecipe?.find(i => i.id == data?.id)
 
     return (
-        <div onClick={() => handleSelectRecipe(data)} className={`relative flex flex-col justify-between gap-5 p-5 my-6 bg-white shadow-md border border-slate-200 rounded-xl lg:w-[90%] ${isExist && "border-2 border-[rgb(23,37,84)]"} `}>
+        <div onClick={() => handleSelectRecipe(data)} className={`relative flex flex-col justify-between gap-5 p-5 my-6 bg-white shadow-md rounded-xl lg:w-[90%] ${isExist && "border-2 border-[rgb(23,37,84)]"} `}>
             {/*  */}
             <div className="relative h-56 my-5 flex items-center justify-center overflow-hidden text-white rounded-md">
                 <img className="object-cover w-[100%] rounded-2xl" src={data?.image} alt="card-image" />
