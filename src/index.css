@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer {
+  .layout {
+    @apply mx-auto max-w-7xl;
+  }
+  
+}
+.selected-week {
+  color: rgb(23,37,84);
+  border-bottom: 4px solid rgb(23,37,84);
+  text-align: center;
+
+}
+
+.unselected-week {
+  color: black;
+  border-bottom: 4px solid transparent;
+  text-align: center;
+}
+p{
+  margin: 0px !important;
+}
